@@ -24,5 +24,5 @@
 每个 demo 文件可以直接用 Node.js 运行，例如：
 
 ```bash
-node js-core/scope-demo.js
+node js-core/day-01-basic.js
 ```
