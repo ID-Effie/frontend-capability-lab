@@ -52,12 +52,35 @@ const user = {
 console.log('1. myCall 执行结果：')
 const callResult = introduce.myCall(user, 18, 'Shanghai')
 console.log('myCall 返回值：', callResult)
+const callResult1 = introduce.myCall(null, 18, 'Shanghai')
+console.log('myCall 返回值：', callResult1)
 
 console.log('2. myApply 执行结果：')
 const applyResult = introduce.myApply(user, [20, 'Beijing'])
 console.log('myApply 返回值：', applyResult)
+const applyResult1 = introduce.myApply(undefined, [20, 'Beijing'])
+console.log('myApply 返回值：', applyResult1)
 
 console.log('3. myBind 执行结果：')
 const bindFn = introduce.myBind(user, 22)
 const bindResult = bindFn('Hangzhou')
 console.log('myBind 返回值：', bindResult)
+const bindFn1 = introduce.myBind(user, 22)('Hangzhou')
+console.log('myBind 返回值：', bindFn1)
+
+
+console.log('========================')
+Function.prototype.meCall = function (content,...args) {
+  const target = content === null||content ===undefined? globalThis : Object(content)
+  const fnKey = Symbol('fn')
+
+  target[fnKey] = this
+  const result = target[fnKey](...args)
+  delete target[fnKey]
+
+  return result
+}
+
+console.log('1. meCall 执行结果：')
+const callResultMeCall = introduce.myCall(user, 18, 'Shanghai')
+console.log('meCall 返回值：', callResultMeCall)
