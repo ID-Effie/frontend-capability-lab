@@ -36,3 +36,34 @@ console.log(typeof Person);
 
 const p1 = new Person('baboo');
 p1.sayHi()
+
+// myInstanceof 
+function myInstanceof(left,right) {
+  let proto = Object.getPrototypeOf(left)
+  const prototype = right.prototype
+
+  while (proto != null) {
+    if (proto === prototype) {
+      return true
+    }
+    proto = Object.getPrototypeOf(proto)
+  }
+  return false
+}
+
+const arr = []
+const obj = {}
+
+console.log(myInstanceof(arr,Object));
+console.log(myInstanceof(arr,Array));
+console.log(myInstanceof(arr,Date));
+
+
+console.log('=========');
+
+console.log(myInstanceof(obj,Object));
+console.log(myInstanceof(obj,Array));
+
+
+
+
