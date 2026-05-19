@@ -46,6 +46,29 @@
     - 手写 `throttle`
     - 用连续函数调用模拟输入场景
     - 用 `setInterval` 模拟高频滚动触发
+- Day 8：TypeScript 基础类型、类型别名与接口
+  - `ts-practice/day8-basic-types.ts`
+    - 基础类型标注
+    - 数组、对象、联合类型
+    - 函数参数和返回值类型
+  - `ts-practice/day8-type-vs-interface.ts`
+    - `type` 和 `interface` 的基础用法
+    - 类型组合与接口继承
+  - `ts-practice/day8-user-model.ts`
+    - 用户模型类型拆分
+    - 登录参数、登录结果、用户信息类型
+- Day 9：函数类型、泛型与工具函数
+  - `ts-practice/day9-study.ts`
+    - 函数参数和返回值类型
+    - 函数重载认知
+    - 泛型基础、泛型约束、默认泛型参数
+  - `ts-practice/day9-utils-demo.ts`
+    - `pickFields<T>`：从对象中提取指定字段
+    - `formatOptions<T>`：把任意列表转成下拉选项
+    - `groupBy<T>`：把任意列表按规则分组
+    - `safeGet<T>`：安全读取对象字段并保留字段类型
+    - `createPageResult<T>`：创建统一分页结果
+    - 每个工具函数至少包含 2 个用例
 
 ## Day 5 验证重点
 
@@ -67,6 +90,26 @@
 - 能说明防抖适合输入搜索、表单校验、窗口 resize 等场景
 - 能说明节流适合滚动监听、鼠标移动、拖拽、高频点击等场景
 
+## Day 8 验证重点
+
+- 能为字符串、数字、布尔值、数组和对象添加基础类型标注
+- 能使用联合类型表达有限范围的状态值
+- 能为函数参数和返回值添加明确类型
+- 能区分 `type` 和 `interface` 的基础使用场景
+- 能使用接口继承或类型组合复用已有类型
+- 能拆分登录参数、登录结果、用户信息等业务模型
+- 能避免把所有字段都写成可选属性或宽泛类型
+
+## Day 9 验证重点
+
+- 能写出带参数类型和返回值类型的函数
+- 能说明泛型用于保留输入和输出之间的类型关系
+- 能使用 `K extends keyof T` 约束对象字段名
+- 能写出 `PageResult<T>` 这类通用分页类型
+- 能使用默认泛型参数降低调用成本
+- 能避免在工具函数中滥用 `any`
+- `pickFields<T>`、`formatOptions<T>`、`groupBy<T>`、`safeGet<T>`、`createPageResult<T>` 均至少有 2 个用例
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -87,4 +130,10 @@ Day 6 demo 可以这样运行：
 ```bash
 node js-core/day06-event-loop-demo.js
 node js-core/day06-debounce-throttle.js
+```
+
+TypeScript demo 可以用 `tsc` 做类型检查：
+
+```bash
+tsc --noEmit --strict ts-practice/day9-utils-demo.ts
 ```
