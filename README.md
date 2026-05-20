@@ -69,6 +69,25 @@
     - `safeGet<T>`：安全读取对象字段并保留字段类型
     - `createPageResult<T>`：创建统一分页结果
     - 每个工具函数至少包含 2 个用例
+- Day 10：类型收窄、类型守卫与 `keyof`
+  - `ts-practice/day10-study.ts`
+    - `typeof` 类型收窄
+    - `in` 区分联合对象
+    - `keyof` 获取对象字段联合类型
+    - 类型断言、类型守卫函数、可辨识联合类型
+  - `ts-practice/day10-type-guards.ts`
+    - 使用 `unknown` 承接不确定数据
+    - 编写 `value is User1` 类型守卫函数
+    - 使用 `typeof` 收窄 `string | number`
+    - 使用 `in` 区分普通用户和管理员用户
+  - `ts-practice/day10-keyof-demo.ts`
+    - 使用 `keyof` 限制对象字段名
+    - 使用 `K extends keyof T` 封装安全取值函数
+    - 使用 `TableColumn<T>` 约束表格列配置
+  - `ts-practice/day10-union-status.ts`
+    - 建立订单状态、审批状态、用户状态联合类型
+    - 使用 `Record<Status, string>` 管理状态文案和颜色映射
+    - 使用可辨识联合类型区分提交成功和失败结果
 
 ## Day 5 验证重点
 
@@ -110,6 +129,18 @@
 - 能避免在工具函数中滥用 `any`
 - `pickFields<T>`、`formatOptions<T>`、`groupBy<T>`、`safeGet<T>`、`createPageResult<T>` 均至少有 2 个用例
 
+## Day 10 验证重点
+
+- 能用 `typeof` 对基础联合类型做收窄
+- 能用 `in` 区分不同对象联合类型
+- 能写出返回 `value is Type` 的类型守卫函数
+- 能说明 `keyof T` 会得到对象类型的字段名联合类型
+- 能使用 `K extends keyof T` 限制安全取值函数的字段名
+- 能用 `TableColumn<T>` 让表格列配置和数据字段保持同步
+- 能使用字面量联合类型管理订单、审批、用户状态
+- 能使用 `Record<Status, string>` 保证每个状态都有文案或颜色映射
+- 能用可辨识联合类型处理成功、失败等不同业务结果
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -136,4 +167,5 @@ TypeScript demo 可以用 `tsc` 做类型检查：
 
 ```bash
 tsc --noEmit --strict ts-practice/day9-utils-demo.ts
+tsc --noEmit --strict ts-practice/day10-study.ts ts-practice/day10-type-guards.ts ts-practice/day10-keyof-demo.ts ts-practice/day10-union-status.ts
 ```
