@@ -88,6 +88,18 @@
     - 建立订单状态、审批状态、用户状态联合类型
     - 使用 `Record<Status, string>` 管理状态文案和颜色映射
     - 使用可辨识联合类型区分提交成功和失败结果
+- Day 11：Axios 响应类型与请求层建模
+  - `ts-practice/day11-api-response.ts`
+    - 定义统一响应结构 `ApiResponse<T>`
+    - 定义接口错误结构 `ApiError`
+  - `ts-practice/day11-request-generic.ts`
+    - 使用 `AxiosRequestConfig` 扩展项目请求配置 `RequestConfig`
+    - 封装泛型请求函数 `request<T>()`
+    - 练习登录接口、用户列表接口、删除用户接口、修改状态接口
+    - 拆分请求参数类型和响应结果类型
+  - `ts-practice/day11-study.ts`
+    - 梳理 `AxiosResponse<T>`、`ApiResponse<T>`、`Promise<ApiResponse<T>>`
+    - 说明 `params`、`data`、`mockData` 的职责区别
 
 ## Day 5 验证重点
 
@@ -141,6 +153,16 @@
 - 能使用 `Record<Status, string>` 保证每个状态都有文案或颜色映射
 - 能用可辨识联合类型处理成功、失败等不同业务结果
 
+## Day 11 验证重点
+
+- 能解释 `AxiosResponse<T>` 中的泛型表示 `res.data` 的类型
+- 能解释 `ApiResponse<T>` 是后端统一响应外壳，`T` 是业务数据类型
+- 能写出返回 `Promise<ApiResponse<T>>` 的泛型请求函数
+- 能区分 `params` 是 URL 查询参数，`data` 是请求体 body
+- 能把登录、列表、删除、修改状态接口的请求参数和响应结果分开定义
+- 能使用 `AxiosRequestConfig` 扩展项目自己的 `RequestConfig`
+- `day11-request-generic.ts` 能通过 TypeScript 类型检查
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -168,4 +190,10 @@ TypeScript demo 可以用 `tsc` 做类型检查：
 ```bash
 tsc --noEmit --strict ts-practice/day9-utils-demo.ts
 tsc --noEmit --strict ts-practice/day10-study.ts ts-practice/day10-type-guards.ts ts-practice/day10-keyof-demo.ts ts-practice/day10-union-status.ts
+```
+
+Day 11 已配置本地类型检查脚本：
+
+```bash
+pnpm typecheck
 ```
