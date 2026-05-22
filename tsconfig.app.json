@@ -18,5 +18,11 @@
     "noFallthroughCasesInSwitch": true
   },
   // include 是否包含了 src/**/*.ts、src/**/*.vue, 如果没有包含，某些文件可能不会被 TS 检查到
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "vue-demos/**/*.vue"
+  ],
+  "exclude": ["vue-demos/vue-ts-basic/day12-study.vue"]
 }
