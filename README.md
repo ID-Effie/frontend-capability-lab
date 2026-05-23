@@ -100,6 +100,42 @@
   - `ts-practice/day11-study.ts`
     - 梳理 `AxiosResponse<T>`、`ApiResponse<T>`、`Promise<ApiResponse<T>>`
     - 说明 `params`、`data`、`mockData` 的职责区别
+- Day 12：Vue 组件中的 TypeScript
+  - `vue-demos/vue-ts-basic/UserCard.vue`
+    - 使用 `defineProps` 定义用户卡片输入类型
+    - 使用 `defineEmits` 定义 `select`、`delete` 事件参数类型
+  - `vue-demos/vue-ts-basic/UserCard-Farhter.vue`
+    - 演示父组件传入 `User` 数据
+    - 演示父组件接收子组件事件并使用明确参数类型
+  - `vue-demos/vue-ts-basic/SearchForm.vue`
+    - 使用 `ref<SearchParams>` 管理搜索表单状态
+    - 使用 `defineEmits` 定义 `search`、`reset` 事件
+    - 使用 `defineExpose` 暴露重置方法
+  - `vue-demos/vue-ts-basic/SearchForm-Farther.vue`
+    - 使用 `InstanceType<typeof SearchForm>` 定义组件实例引用
+    - 演示父组件调用子组件暴露方法
+  - `vue-demos/vue-ts-basic/SimplePagination.vue`
+    - 使用 props 定义分页参数
+    - 使用 emits 定义分页变化事件
+    - 使用 `computed` 计算总页数
+  - `vue-demos/vue-ts-basic/day12-study.vue`
+    - 作为 Vue 组件 TypeScript 学习草稿，整理 `defineProps`、`defineEmits`、`ref<T>`、`computed<T>`、模板引用类型和 `defineExpose`
+- Day 13：Pinia、表单与表格类型实践
+  - `ts-practice/day13-pinia-store-types.ts`
+    - 使用 `defineStore` 练习 Pinia store 类型
+    - 定义 `AuthState`、`UserInfo`
+    - 给 `state`、`getters`、`actions` 补明确类型
+    - 使用 `Partial<Pick<...>>` 练习部分字段更新
+  - `ts-practice/day13-form-model.ts`
+    - 定义 `UserFormModel` 和 `CreateUserParams`
+    - 定义 `CustomerFormModel` 和 `CreateCustomerParams`
+    - 定义 `OrderFormModel` 和 `CreateOrderParams`
+    - 对比表单 model 和接口 params 不能直接复用的字段
+  - `ts-practice/day13-table-row.ts`
+    - 定义 `CustomerRow` 和 `OrderRow`
+    - 使用数组类型管理表格数据
+    - 使用 `TableColumn<T>` 和 `keyof T` 约束列配置字段
+    - 给行编辑、删除函数补 row 参数类型
 
 ## Day 5 验证重点
 
@@ -163,6 +199,30 @@
 - 能使用 `AxiosRequestConfig` 扩展项目自己的 `RequestConfig`
 - `day11-request-generic.ts` 能通过 TypeScript 类型检查
 
+## Day 12 验证重点
+
+- 能使用 `defineProps` 给组件输入数据补类型
+- 能使用 `defineEmits` 给组件事件名和事件参数补类型
+- 能使用 `ref<T>` 定义表单状态、列表状态和组件实例引用
+- 能使用 `computed` 计算分页总页数
+- 能使用 `InstanceType<typeof Component>` 定义组件实例 ref
+- 能理解 `defineExpose` 只暴露父组件需要调用的方法
+- 用户卡片、搜索表单、分页组件简化版均已完成 Vue + TS demo
+- `vue-tsc` 能通过 `.vue` 文件类型检查
+
+## Day 13 验证重点
+
+- 能说明 Pinia store 中 `state`、`getters`、`actions` 各自负责什么
+- 能为 store 定义完整的 `State` 类型，并让 `state` 返回值使用该类型
+- 能为 action 参数和返回值补明确类型，例如 `LoginParams`、`Promise<void>`
+- 能说明登录状态为什么适合统一放到 store，而不是散落在登录页
+- 能区分表单 model 和接口 params，知道哪些字段不能直接复用
+- 能写出用户表单、客户表单、订单表单的 model 类型
+- 能写出客户行数据、订单行数据的 row 类型
+- 能使用 `TableColumn<T>` 和 `keyof T` 约束表格列配置
+- 能使用 `Partial<T>` 或 `Partial<Pick<T, K>>` 表达局部更新
+- `day13-pinia-store-types.ts`、`day13-form-model.ts`、`day13-table-row.ts` 能通过 TypeScript 类型检查
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -196,4 +256,16 @@ Day 11 已配置本地类型检查脚本：
 
 ```bash
 pnpm typecheck
+```
+
+Day 12 Vue demo 使用 `vue-tsc` 检查 `.vue` 文件类型：
+
+```bash
+pnpm exec vue-tsc -p tsconfig.app.json --noEmit
+```
+
+Day 13 TypeScript demo 可以单独检查：
+
+```bash
+pnpm exec tsc --noEmit --strict --moduleResolution Bundler --module ESNext --target ES2020 --ignoreConfig ts-practice/day13-pinia-store-types.ts ts-practice/day13-form-model.ts ts-practice/day13-table-row.ts
 ```

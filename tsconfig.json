@@ -12,6 +12,7 @@
   },
   "include": [
     "ts-practice/day11-api-response.ts",
-    "ts-practice/day11-request-generic.ts"
+    "ts-practice/day11-request-generic.ts",
+    "day13-*"
   ]
 }
