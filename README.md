@@ -136,6 +136,34 @@
     - 使用数组类型管理表格数据
     - 使用 `TableColumn<T>` 和 `keyof T` 约束列配置字段
     - 给行编辑、删除函数补 row 参数类型
+- Day 15：Vue 3 `script setup`、`ref` 与 `reactive`
+  - `vue-demos/day15-ref/reactive-demo.vue`
+    - 使用 `script setup lang="ts"` 编写 Vue 3 单文件组件
+    - 使用 `ref` 完成计数器状态
+    - 使用 `reactive<User>` 管理用户信息编辑状态
+    - 使用 `ref<User[]>` 管理用户列表
+    - 通过 `v-model` 验证响应式对象字段更新
+    - 添加用户时使用 `{ ...user }` 保存当前表单快照，避免列表项继续引用同一个响应式对象
+    - 通过列表渲染对比 `ref` 列表状态和 `reactive` 对象状态
+  - `index.html`、`src/main.ts`、`src/App.vue`、`vite.config.ts`
+    - 补齐 Vite + Vue 浏览器运行入口
+    - 在 `App.vue` 中挂载 `reactive-demo.vue`
+    - 支持通过本地 Vite 服务查看 Day 15 demo
+- Day 16：Vue 3 `computed`、`watch` 与 `watchEffect`
+  - `vue-demos/day16-computed-watch-watchEffect/product-price-calculation.vue`
+    - 使用 `computed` 根据商品单价、数量、优惠金额计算原价和优惠后价格
+    - 验证 `computed` 适合处理由响应式状态推导出来的展示值
+  - `vue-demos/day16-computed-watch-watchEffect/Watch-search-conditions.vue`
+    - 使用搜索关键词、状态和页码作为查询条件状态
+    - 使用 `computed` 生成查询条件摘要
+    - 使用 `watch` 监听明确的数据源并模拟列表请求
+    - 对比 `watch` 可以拿到新值和旧值，触发条件更可控
+  - `vue-demos/day16-computed-watch-watchEffect/Auto-save-form-drafts.vue`
+    - 使用表单草稿状态练习自动保存场景
+    - 使用 `watch` / `watchEffect` 对比副作用触发方式
+    - 验证副作用应放在 `watch` 或 `watchEffect` 中，而不是写进 `computed`
+  - `src/App.vue`
+    - 通过切换导入的 demo 组件查看 Day 16 不同示例
 
 ## Day 5 验证重点
 
@@ -223,6 +251,32 @@
 - 能使用 `Partial<T>` 或 `Partial<Pick<T, K>>` 表达局部更新
 - `day13-pinia-store-types.ts`、`day13-form-model.ts`、`day13-table-row.ts` 能通过 TypeScript 类型检查
 
+## Day 15 验证重点
+
+- 能说明 `script setup` 为什么不需要手动 `return`
+- 能说明 `ref` 在脚本中需要 `.value`，在模板中会自动解包
+- 能说明 `reactive` 适合管理表单、查询条件这类对象状态
+- 能区分单个值、列表状态和对象状态分别适合用 `ref` 还是 `reactive`
+- 能通过计数器验证 `ref` 状态更新
+- 能通过用户信息编辑验证 `reactive` 对象字段更新
+- 能说明为什么添加用户列表时要使用 `{ ...user }` 保存快照
+- 能通过 Vite 在浏览器中打开 `reactive-demo.vue`
+
+## Day 16 验证重点
+
+- 能说明 `computed` 用于根据响应式数据推导新值，并且会基于依赖缓存结果
+- 能说明 `computed` 默认只读，也可以通过 `get/set` 写成可写计算属性
+- 能说明为什么 `computed` 不适合发请求、写缓存、修改其他响应式状态等副作用
+- 能使用 `computed` 完成商品价格计算和查询条件摘要
+- 能使用 `watch` 监听单个 `ref`、getter、多个来源组成的数组
+- 能说明监听 `reactive` 对象字段时推荐使用 getter，例如 `() => query.keyword`
+- 能使用 `watch` 的 `immediate` 选项在侦听器创建时立即执行一次
+- 能说明 `deep` 深度监听的作用和性能成本
+- 能使用 `watch` 模拟搜索条件变化后的列表请求
+- 能说明 `watchEffect` 会立即执行，并自动追踪同步执行期间访问到的响应式依赖
+- 能区分 `watch` 和 `watchEffect`：前者手动指定监听源，后者自动收集依赖
+- 能删除或改正把副作用写进 `computed` 的错误示例
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -268,4 +322,29 @@ Day 13 TypeScript demo 可以单独检查：
 
 ```bash
 pnpm exec tsc --noEmit --strict --moduleResolution Bundler --module ESNext --target ES2020 --ignoreConfig ts-practice/day13-pinia-store-types.ts ts-practice/day13-form-model.ts ts-practice/day13-table-row.ts
+```
+
+Day 15 Vue demo 可以通过 Vite 在浏览器中查看：
+
+```bash
+pnpm exec vite --host 127.0.0.1
+```
+
+启动后访问 Vite 输出的本地地址，例如：
+
+```text
+http://127.0.0.1:5173/
+```
+
+Day 16 Vue demo 也通过同一个 Vite 入口查看。需要切换示例时，修改 `src/App.vue` 中导入的组件：
+
+```ts
+// 商品价格计算
+// import ReactiveDemo from "../vue-demos/day16-computed-watch-watchEffect/product-price-calculation.vue";
+
+// 搜索条件监听
+// import ReactiveDemo from "../vue-demos/day16-computed-watch-watchEffect/Watch-search-conditions.vue";
+
+// 表单草稿自动保存
+// import ReactiveDemo from "../vue-demos/day16-computed-watch-watchEffect/Auto-save-form-drafts.vue";
 ```
