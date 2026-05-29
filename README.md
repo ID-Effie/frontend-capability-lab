@@ -185,9 +185,9 @@
   - `vue-demos/day17-生命周期与组件通信/ThemePanel.vue`
     - 使用 `inject` 注入主题状态和切换方法
     - 验证 `provide / inject` 适合跨层级共享主题、权限、用户信息等上下文
-- Day 18：Vue 插槽与业务组件封装
-  - `vue-demos/day18-slot/BaseCard.vue`
-    - 使用默认插槽承载卡片主体内容
+	- Day 18：Vue 插槽与业务组件封装
+	  - `vue-demos/day18-slot/BaseCard.vue`
+	    - 使用默认插槽承载卡片主体内容
     - 使用 `title` 具名插槽承载卡片标题
     - 使用 `extra` 具名插槽承载卡片右侧操作
   - `vue-demos/day18-slot/BaseList.vue`
@@ -199,9 +199,24 @@
     - 使用 `data` props 接收表格数据
     - 通过 `actions` 具名作用域插槽暴露当前行 `row`
     - 演示后台项目表格操作列中“结构固定、按钮变化”的典型场景
-  - `vue-demos/day18-slot/SlotDemo.vue`
-    - 引入并测试 `BaseCard`、`BaseList`、`BaseTable`
-    - 验证默认插槽、具名插槽、作用域插槽在同一个页面中的使用方式
+	  - `vue-demos/day18-slot/SlotDemo.vue`
+	    - 引入并测试 `BaseCard`、`BaseList`、`BaseTable`
+	    - 验证默认插槽、具名插槽、作用域插槽在同一个页面中的使用方式
+	- Day 19：Vue 3 组合式函数 composable
+	  - `vue-demos/day19-composable/usePagination.ts`
+	    - 使用 `ref` 管理 `currentPage`、`pageSize`、`total`
+	    - 使用 `computed` 推导 `totalPages`
+	    - 提供 `setPage`、`setPageSize`、`setTotal`、`reset` 方法
+	  - `vue-demos/day19-composable/useModal.ts`
+	    - 管理弹窗 `visible`、`mode`、`current`
+	    - 提供 `openCreate`、`openEdit`、`close` 方法
+	    - 支持通过泛型约束当前编辑数据类型
+	  - `vue-demos/day19-composable/useLoading.ts`
+	    - 管理请求 loading 状态
+	    - 提供 `start`、`stop`、`toggle` 方法
+	  - `vue-demos/day19-composable/day19-composable-Demo.vue`
+	    - 在同一个页面中验证 `usePagination`、`useModal`、`useLoading`
+	    - 通过按钮操作验证每个 composable 的状态和方法返回值
 
 ## Day 5 验证重点
 
@@ -337,6 +352,17 @@
 - 能说明后台项目为什么常用作用域插槽：表格结构稳定，但每个页面的操作按钮和业务动作不同
 - 能说明插槽不是越多越好，过多插槽会导致组件职责变模糊、使用成本变高、父组件依赖子组件内部结构
 
+## Day 19 验证重点
+
+- 能说明 composable 是以 `useXxx` 命名的组合式函数，用于封装可复用状态逻辑
+- 能区分 composable 和组件的边界：组件负责 UI 和业务编排，composable 负责状态、方法和副作用
+- 能写出 `usePagination`，并返回 `currentPage`、`pageSize`、`total`、`totalPages` 和分页方法
+- 能写出 `useModal`，并返回 `visible`、`mode`、`current` 和弹窗开关方法
+- 能写出 `useLoading`，并通过 `start`、`stop`、`toggle` 管理加载状态
+- 能在组件中解构 composable 返回值，并在模板中验证状态更新
+- 能说明哪些逻辑适合抽成 composable，例如分页、弹窗、loading、请求状态、表单状态
+- 能说明抽象的收益和成本，避免把只在单个组件中使用的临时代码过早抽象
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -407,4 +433,10 @@ Day 16 Vue demo 也通过同一个 Vite 入口查看。需要切换示例时，�
 
 // 表单草稿自动保存
 // import ReactiveDemo from "../vue-demos/day16-computed-watch-watchEffect/Auto-save-form-drafts.vue";
+```
+
+Day 19 composable demo 也通过同一个 Vite 入口查看。需要切换示例时，修改 `src/App.vue` 中导入的组件：
+
+```ts
+import ReactiveDemo from "../vue-demos/day19-composable/day19-composable-Demo.vue";
 ```
