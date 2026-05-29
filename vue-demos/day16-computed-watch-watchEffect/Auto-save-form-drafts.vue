@@ -25,7 +25,7 @@ watch(
   form,
   () => {
     localStorage.setItem("draft-title", form.title);
-    localStorage.setItem("draft-content", form.title);
+    localStorage.setItem("draft-content", form.content);
 
     savedText.value = `已自动保存：${new Date().toLocaleDateString()}`;
   },

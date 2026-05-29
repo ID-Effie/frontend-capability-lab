@@ -164,6 +164,44 @@
     - 验证副作用应放在 `watch` 或 `watchEffect` 中，而不是写进 `computed`
   - `src/App.vue`
     - 通过切换导入的 demo 组件查看 Day 16 不同示例
+- Day 17：Vue 生命周期与组件通信
+  - `vue-demos/day17-生命周期与组件通信/UserFormParent.vue`
+    - 父组件使用 `ref` 管理用户名状态
+    - 通过 `props` 把 `username` 传给子组件
+    - 监听子组件 `updateName`、`submit` 事件完成表单更新和提交
+  - `vue-demos/day17-生命周期与组件通信/UserForm.vue`
+    - 使用 `defineProps` 接收 `username`
+    - 使用 `defineEmits` 声明 `updateName`、`submit` 事件
+    - 验证子组件不直接修改父组件状态，而是通过事件通知父组件
+  - `vue-demos/day17-生命周期与组件通信/OrderInfoParent.vue`
+    - 父组件维护订单数据和支付、取消订单动作
+    - 通过 `props` 向订单详情子组件传入订单对象
+  - `vue-demos/day17-生命周期与组件通信/OrderInfo.vue`
+    - 使用订单对象 props 渲染订单详情
+    - 通过 `pay(orderId)`、`cancel(orderId)` 事件把用户操作交还给父组件处理
+  - `vue-demos/day17-生命周期与组件通信/ThemePanelRoot.vue`
+    - 使用 `provide` 提供主题状态和切换主题方法
+    - 提供响应式 `ref` 时，后代组件注入类型需要写成 `Ref<T>`
+  - `vue-demos/day17-生命周期与组件通信/ThemePanel.vue`
+    - 使用 `inject` 注入主题状态和切换方法
+    - 验证 `provide / inject` 适合跨层级共享主题、权限、用户信息等上下文
+- Day 18：Vue 插槽与业务组件封装
+  - `vue-demos/day18-slot/BaseCard.vue`
+    - 使用默认插槽承载卡片主体内容
+    - 使用 `title` 具名插槽承载卡片标题
+    - 使用 `extra` 具名插槽承载卡片右侧操作
+  - `vue-demos/day18-slot/BaseList.vue`
+    - 使用 `list` props 接收列表数据
+    - 子组件负责 `v-for` 循环列表
+    - 通过作用域插槽 `:item="item"` 把当前列表项暴露给父组件
+    - 父组件决定每一项具体如何渲染
+  - `vue-demos/day18-slot/BaseTable.vue`
+    - 使用 `data` props 接收表格数据
+    - 通过 `actions` 具名作用域插槽暴露当前行 `row`
+    - 演示后台项目表格操作列中“结构固定、按钮变化”的典型场景
+  - `vue-demos/day18-slot/SlotDemo.vue`
+    - 引入并测试 `BaseCard`、`BaseList`、`BaseTable`
+    - 验证默认插槽、具名插槽、作用域插槽在同一个页面中的使用方式
 
 ## Day 5 验证重点
 
@@ -276,6 +314,28 @@
 - 能说明 `watchEffect` 会立即执行，并自动追踪同步执行期间访问到的响应式依赖
 - 能区分 `watch` 和 `watchEffect`：前者手动指定监听源，后者自动收集依赖
 - 能删除或改正把副作用写进 `computed` 的错误示例
+
+## Day 17 验证重点
+
+- 能说明 Vue 组件从创建、挂载、更新到卸载的生命周期过程
+- 能说明接口请求通常放在 `onMounted`，定时器和事件监听清理通常放在 `onBeforeUnmount`
+- 能写清父子通信的数据流：父组件通过 `props` 向下传递数据，子组件通过 `emit` 向上传递事件
+- 能使用 `defineProps` 和 `defineEmits` 为表单组件、订单详情组件补明确类型
+- 能说明子组件不应该直接修改父组件状态，而应该通过事件通知父组件处理
+- 能使用 `provide / inject` 完成主题或权限这类跨层级上下文共享
+- 能解释 `inject<Ref<T>>()` 的原因：祖先组件提供的是 `ref`，后代组件注入时类型要对应
+- 能说出 `provide / inject` 不适合替代普通父子通信，也不适合承载复杂全局业务状态
+
+## Day 18 验证重点
+
+- 能说明默认插槽适合承载组件的主体内容
+- 能说明具名插槽适合承载标题区、操作区、底部区域等明确位置
+- 能说明作用域插槽适合子组件掌握数据或循环逻辑、父组件决定渲染内容的场景
+- 能写出带 `title`、`extra` 具名插槽和默认插槽的通用卡片组件
+- 能写出通过 `:item="item"` 暴露当前列表项的通用列表容器
+- 能写出通过 `#actions="{ row }"` 自定义表格操作列的 demo
+- 能说明后台项目为什么常用作用域插槽：表格结构稳定，但每个页面的操作按钮和业务动作不同
+- 能说明插槽不是越多越好，过多插槽会导致组件职责变模糊、使用成本变高、父组件依赖子组件内部结构
 
 ## 使用方式
 

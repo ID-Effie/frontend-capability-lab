@@ -5,7 +5,8 @@
 // import ReactiveDemo from "../vue-demos/day16-computed-watch-watchEffect/Auto-save-form-drafts.vue";
 // import ReactiveDemo from "../vue-demos/day17-生命周期与组件通信/UserFormParent.vue";
 // import ReactiveDemo from "../vue-demos/day17-生命周期与组件通信/OrderInfoParent.vue";
-import ReactiveDemo from "../vue-demos/day17-生命周期与组件通信/ThemePanelRoot.vue";
+// import ReactiveDemo from "../vue-demos/day17-生命周期与组件通信/ThemePanelRoot.vue";
+import ReactiveDemo from "../vue-demos/day18-slot/SlotDemo.vue";
 </script>
 
 <template>
