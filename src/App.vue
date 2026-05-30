@@ -7,7 +7,8 @@
 // import ReactiveDemo from "../vue-demos/day17-生命周期与组件通信/OrderInfoParent.vue";
 // import ReactiveDemo from "../vue-demos/day17-生命周期与组件通信/ThemePanelRoot.vue";
 // import ReactiveDemo from "../vue-demos/day18-slot/SlotDemo.vue";
-import ReactiveDemo from "../vue-demos/day19-composable/day19-composable-Demo.vue";
+// import ReactiveDemo from "../vue-demos/day19-composable/day19-composable-Demo.vue";
+import ReactiveDemo from "../src/day20-directives/directive-Demo.vue";
 </script>
 
 <template>

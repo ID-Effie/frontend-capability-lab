@@ -217,6 +217,22 @@
 	  - `vue-demos/day19-composable/day19-composable-Demo.vue`
 	    - 在同一个页面中验证 `usePagination`、`useModal`、`useLoading`
 	    - 通过按钮操作验证每个 composable 的状态和方法返回值
+	- Day 20：Vue 自定义指令与权限 demo
+	  - `src/day20-directives/focus.ts`
+	    - 实现 `v-focus`，在元素挂载后自动聚焦
+	    - 验证 DOM 行为适合用自定义指令封装
+	  - `src/day20-directives/copy.ts`
+	    - 实现 `v-copy`，点击元素后通过 `navigator.clipboard.writeText` 复制文本
+	    - 使用 `try/catch` 处理复制失败
+	    - 使用 `_copyHandler` 保存事件函数引用，并在 `unmounted` 中移除监听
+	    - 使用 `_copyValue` 和 `updated` 保证指令值变化后复制最新文本
+	  - `src/day20-directives/permission.ts`
+	    - 实现 `v-permission`，根据模拟权限列表控制按钮展示
+	    - 验证前端权限指令只能控制展示，不能替代后端鉴权
+	  - `src/day20-directives/index.ts`
+	    - 统一注册 `focus`、`copy`、`permission` 三个全局指令
+	  - `src/day20-directives/directive-Demo.vue`
+	    - 在同一个页面中验证自动聚焦、复制文本和按钮权限展示
 
 ## Day 5 验证重点
 
@@ -363,6 +379,19 @@
 - 能说明哪些逻辑适合抽成 composable，例如分页、弹窗、loading、请求状态、表单状态
 - 能说明抽象的收益和成本，避免把只在单个组件中使用的临时代码过早抽象
 
+## Day 20 验证重点
+
+- 能说明自定义指令适合封装直接操作 DOM 的行为，例如聚焦、复制、权限展示
+- 能说出 `mounted`、`updated`、`unmounted` 在指令中的职责
+- 能写出 `v-focus`，并解释为什么自动聚焦要放在 `mounted`
+- 能写出 `v-copy`，并使用 `navigator.clipboard.writeText` 完成复制
+- 能说明为什么要保存 `_copyHandler`：`removeEventListener` 需要同一个函数引用
+- 能说明 `handleClick` 访问外层变量是闭包，`el._copyHandler = handleClick` 是保存函数引用
+- 能使用 `updated` 同步最新的 `_copyValue`，避免复制到旧的闭包值
+- 能写出 `v-permission`，并根据权限列表控制按钮显示或隐藏
+- 能说明前端按钮权限只能优化体验，不能替代后端接口鉴权
+- 能通过 `directive-Demo.vue` 同时验证 `v-focus`、`v-copy`、`v-permission`
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -439,4 +468,16 @@ Day 19 composable demo 也通过同一个 Vite 入口查看。需要切换示例
 
 ```ts
 import ReactiveDemo from "../vue-demos/day19-composable/day19-composable-Demo.vue";
+```
+
+Day 20 自定义指令 demo 也通过同一个 Vite 入口查看。需要切换示例时，修改 `src/App.vue` 中导入的组件：
+
+```ts
+import ReactiveDemo from "../src/day20-directives/directive-Demo.vue";
+```
+
+三个全局指令在 `src/day20-directives/index.ts` 中统一注册，并在 `src/main.ts` 中调用：
+
+```ts
+setDirectives(app);
 ```
