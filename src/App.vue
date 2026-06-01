@@ -8,9 +8,18 @@
 // import ReactiveDemo from "../vue-demos/day17-生命周期与组件通信/ThemePanelRoot.vue";
 // import ReactiveDemo from "../vue-demos/day18-slot/SlotDemo.vue";
 // import ReactiveDemo from "../vue-demos/day19-composable/day19-composable-Demo.vue";
-import ReactiveDemo from "../src/day20-directives/directive-Demo.vue";
+// import ReactiveDemo from "../src/day20-directives/directive-Demo.vue";
+import { env } from "@/day22-vite-env-demo/config/env";
+import { message } from "@/day22-vite-env-demo/utils/message";
 </script>
 
 <template>
-  <ReactiveDemo />
+  <!-- <ReactiveDemo /> -->
+
+  <!-- day22-Demo -->
+  <h1>{{ env.title }}</h1>
+  <p>{{ message }}</p>
+  <p>接口地址：{{ env.apiBaseUrl }}</p>
+  <p>当前模式：{{ env.mode }}</p>
+  <p>是否开发环境：{{ env.isDev }}</p>
 </template>

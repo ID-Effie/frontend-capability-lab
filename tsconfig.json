@@ -7,12 +7,21 @@
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
+    "types": ["vite/client"],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "noEmit": true
   },
   "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
     "ts-practice/day11-api-response.ts",
     "ts-practice/day11-request-generic.ts",
     "day13-*"
-  ]
+  ],
+  "exclude": ["vue-demos/vue-ts-basic/day12-study.vue"]
 }
