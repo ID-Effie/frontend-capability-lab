@@ -233,6 +233,34 @@
 	    - 统一注册 `focus`、`copy`、`permission` 三个全局指令
 	  - `src/day20-directives/directive-Demo.vue`
 	    - 在同一个页面中验证自动聚焦、复制文本和按钮权限展示
+- Day 22：Vite 项目骨架、环境变量与路径别名 demo
+  - `src/day22-vite-env-demo/config/env.ts`
+    - 使用 `import.meta.env` 读取 Vite 环境变量
+    - 统一整理 `apiBaseUrl`、`title`、`mode`、`isDev` 等环境信息
+  - `src/day22-vite-env-demo/utils/message.ts`
+    - 使用 `@` 路径别名导入工具模块
+    - 验证 Vite 和 TypeScript 都能识别 `@`
+  - `vite.config.ts`
+    - 配置 `@` 指向 `src`
+  - `.env.development`
+    - 管理开发环境下的接口地址和应用标题
+- Day 23：Vue Router、嵌套路由、路由守卫与 `meta`
+  - `src/router/index.ts`
+    - 使用 `createRouter` 和 `createWebHistory` 建立路由实例
+    - 配置 `/login`、`/dashboard`、`/user`、`/403`、404 通配路由
+    - 使用 `meta.title`、`meta.requiresAuth`、`meta.permission` 描述页面业务属性
+    - 使用 `beforeEach` 验证登录拦截、权限拦截和页面标题设置
+  - `src/layouts/BaseLayout.vue`
+    - 作为后台布局父路由组件
+    - 通过 `RouterLink` 和 `RouterView` 验证嵌套路由
+  - `src/views/login/index.vue`
+    - 提供“模拟登录”按钮，写入 demo token 后跳回来源页面
+  - `src/views/dashboard/index.vue`
+    - 验证登录后可访问的首页子路由
+  - `src/views/user/index.vue`
+    - 验证缺少 `user:list` 权限时跳转 `/403`
+  - `src/views/error/403.vue`、`src/views/error/404.vue`
+    - 验证无权限和未匹配路由的异常页兜底
 
 ## Day 5 验证重点
 
@@ -392,6 +420,31 @@
 - 能说明前端按钮权限只能优化体验，不能替代后端接口鉴权
 - 能通过 `directive-Demo.vue` 同时验证 `v-focus`、`v-copy`、`v-permission`
 
+## Day 22 验证重点
+
+- 能说明中后台项目为什么要按职责拆目录
+- 能说明 `api`、`components`、`composables`、`directives`、`layouts`、`router`、`stores`、`types`、`utils`、`views` 的职责边界
+- 能在 `vite.config.ts` 中配置 `@` 路径别名
+- 能在 TypeScript 配置中让编辑器和类型检查识别 `@/*`
+- 能使用 `.env.development` 管理开发环境变量
+- 能通过 `import.meta.env` 读取 `VITE_` 开头的环境变量
+- 能区分 `constants`、`types`、`utils` 分别解决什么问题
+- 能通过本地 Vite 页面验证路径别名和环境变量读取
+
+## Day 23 验证重点
+
+- 能说明静态路由、嵌套路由、路由守卫、`meta`、403、404 各自负责什么
+- 能配置 `BasicLayout + children` 的后台嵌套路由
+- 能在 `App.vue` 和布局组件中正确放置 `RouterView`
+- 能在 `main.ts` 中通过 `app.use(router)` 注册路由
+- 能用 `meta.title` 设置页面标题
+- 能用 `meta.requiresAuth` 控制页面是否需要登录
+- 能用 `meta.permission` 控制页面访问权限
+- 能通过 `beforeEach` 实现未登录访问后台页跳转登录页
+- 能通过 `beforeEach` 实现无权限访问业务页跳转 `/403`
+- 能通过 `/:pathMatch(.*)*` 实现 404 兜底
+- 能说明 `403` 是无权限，`404` 是页面不存在
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -480,4 +533,25 @@ import ReactiveDemo from "../src/day20-directives/directive-Demo.vue";
 
 ```ts
 setDirectives(app);
+```
+
+Day 23 Router demo 已接入项目入口，可以直接启动查看：
+
+```bash
+pnpm dev
+```
+
+启动后访问：
+
+```text
+http://127.0.0.1:5173/
+```
+
+验证路径：
+
+```text
+访问 /dashboard，未登录时跳 /login。
+点击“模拟登录”后跳回 /dashboard。
+访问 /user，因为缺少 user:list 权限，跳 /403。
+访问不存在路径，例如 /not-exist，显示 404。
 ```

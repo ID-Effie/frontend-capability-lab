@@ -7,12 +7,31 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+import { useUserStore } from "@/stores/user";
 
-const route = useRoute();
-const router = useRouter();
+const authStore = useAuthStore();
+const useStore = useUserStore();
 
-function login() {
-  localStorage.setItem("token", "demo-token");
-  router.push((route.query.redirect as string) || "/dashboard");
+function mockLogin() {
+  authStore.setToken("mock-token-day24");
+
+  useStore.setUserInfo({
+    id: 1,
+    username: "admin",
+    nickname: "管理员",
+    roles: ["admin"],
+  });
+}
+function logout() {
+  authStore.logout();
 }
 </script>
+
+<template>
+  <div>
+    <p>当前 token： {{ authStore.token || "未登录" }}</p>
+    <button @click="mockLogin">模拟登录</button>
+    <button @click="logout">退出登录</button>
+  </div>
+</template>
