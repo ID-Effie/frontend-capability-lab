@@ -274,6 +274,13 @@
     - 依次请求成功、业务错误、401、500 四类接口
     - 使用 `try/catch` 验证错误能被调用方捕获
     - 通过浏览器控制台观察请求层处理结果
+- Day 26：ESLint、Prettier 与代码规范认知
+  - `ts-practice/day26-lint-prettier.ts`
+    - 记录一次格式化前后的代码对比
+    - 练习把松散代码交给 Prettier 统一格式
+    - 练习通过 TypeScript / ESLint 思路发现未使用变量、类型问题和潜在代码质量问题
+    - 理解 ESLint 负责代码质量，Prettier 负责代码格式
+    - 为主项目配置 husky、lint-staged 和 commit message 规范打基础
 
 ## Day 5 验证重点
 
@@ -469,6 +476,17 @@
 - 能使用 mock 成功、业务失败、401、500 四类响应验证请求封装
 - 能通过 TypeScript 检查 `request-wrapper.ts`、`mock.ts`、`main.ts`
 
+## Day 26 验证重点
+
+- 能说明 ESLint 和 Prettier 的职责区别
+- 能说明 ESLint 偏代码质量检查，Prettier 偏代码格式统一
+- 能通过格式化前后代码对比说明 Prettier 的价值
+- 能故意制造并修复基础 lint / 类型问题
+- 能说明 husky 用来接入 Git hooks，常用于提交前检查
+- 能说明 lint-staged 只处理暂存区文件，适合提高提交前检查速度
+- 能说出 `type(scope): subject` 形式的 commit message 规范
+- 能理解 `chore(lint): add pre commit quality checks` 的含义
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -508,6 +526,12 @@ Day 25 Axios 请求封装 demo 可以单独做 TypeScript 检查：
 
 ```bash
 pnpm exec tsc --ignoreConfig --noEmit --strict --moduleResolution Bundler --module ESNext --target ES2020 --lib ES2020,DOM --esModuleInterop --allowSyntheticDefaultImports day25-request-wrapper-demo/src/main.ts day25-request-wrapper-demo/src/mock.ts day25-request-wrapper-demo/src/request-wrapper.ts
+```
+
+Day 26 代码规范 demo 可以单独做 TypeScript 检查：
+
+```bash
+pnpm exec tsc --ignoreConfig --noEmit --strict --moduleResolution Bundler --module ESNext --target ES2020 ts-practice/day26-lint-prettier.ts
 ```
 
 Day 12 Vue demo 使用 `vue-tsc` 检查 `.vue` 文件类型：
