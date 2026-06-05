@@ -261,6 +261,19 @@
     - 验证缺少 `user:list` 权限时跳转 `/403`
   - `src/views/error/403.vue`、`src/views/error/404.vue`
     - 验证无权限和未匹配路由的异常页兜底
+- Day 25：Axios 请求封装 demo
+  - `day25-request-wrapper-demo/src/request-wrapper.ts`
+    - 使用 `axios.create()` 创建统一请求实例
+    - 使用请求拦截器在请求发出前注入 token
+    - 使用响应拦截器统一处理业务错误、401、500 和网络错误
+    - 保持页面调用侧只关心接口结果，不重复处理全局错误逻辑
+  - `day25-request-wrapper-demo/src/mock.ts`
+    - 使用 `axios-mock-adapter` 模拟成功响应、业务失败、401、500
+    - 验证 mock 响应可以触发请求封装中的不同处理分支
+  - `day25-request-wrapper-demo/src/main.ts`
+    - 依次请求成功、业务错误、401、500 四类接口
+    - 使用 `try/catch` 验证错误能被调用方捕获
+    - 通过浏览器控制台观察请求层处理结果
 
 ## Day 5 验证重点
 
@@ -445,6 +458,17 @@
 - 能通过 `/:pathMatch(.*)*` 实现 404 兜底
 - 能说明 `403` 是无权限，`404` 是页面不存在
 
+## Day 25 验证重点
+
+- 能说明 `axios.create()` 为什么要创建项目专用请求实例
+- 能说明请求拦截器在请求发出前执行，适合注入 token
+- 能说明响应拦截器在响应回来后执行，适合统一处理业务错误和 HTTP 错误
+- 能区分业务错误和 HTTP 错误：业务错误通常是 `status = 200` 但 `code !== 0`
+- 能说明 `401` 通常代表登录过期，需要清 token 并跳登录
+- 能说明 `500`、网络错误不应该散落在各页面重复处理
+- 能使用 mock 成功、业务失败、401、500 四类响应验证请求封装
+- 能通过 TypeScript 检查 `request-wrapper.ts`、`mock.ts`、`main.ts`
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -478,6 +502,12 @@ Day 11 已配置本地类型检查脚本：
 
 ```bash
 pnpm typecheck
+```
+
+Day 25 Axios 请求封装 demo 可以单独做 TypeScript 检查：
+
+```bash
+pnpm exec tsc --ignoreConfig --noEmit --strict --moduleResolution Bundler --module ESNext --target ES2020 --lib ES2020,DOM --esModuleInterop --allowSyntheticDefaultImports day25-request-wrapper-demo/src/main.ts day25-request-wrapper-demo/src/mock.ts day25-request-wrapper-demo/src/request-wrapper.ts
 ```
 
 Day 12 Vue demo 使用 `vue-tsc` 检查 `.vue` 文件类型：

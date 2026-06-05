@@ -21,7 +21,8 @@
     "src/**/*.vue",
     "ts-practice/day11-api-response.ts",
     "ts-practice/day11-request-generic.ts",
-    "day13-*"
+    "day13-*",
+    "day25-request-wrapper-demo/*"
   ],
   "exclude": ["vue-demos/vue-ts-basic/day12-study.vue"]
 }
