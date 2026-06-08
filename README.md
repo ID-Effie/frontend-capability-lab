@@ -254,7 +254,7 @@
     - 作为后台布局父路由组件
     - 通过 `RouterLink` 和 `RouterView` 验证嵌套路由
   - `src/views/login/index.vue`
-    - 提供“模拟登录”按钮，写入 demo token 后跳回来源页面
+    - 提供 mock 登录入口，写入 demo token 后跳回来源页面
   - `src/views/dashboard/index.vue`
     - 验证登录后可访问的首页子路由
   - `src/views/user/index.vue`
@@ -281,6 +281,25 @@
     - 练习通过 TypeScript / ESLint 思路发现未使用变量、类型问题和潜在代码质量问题
     - 理解 ESLint 负责代码质量，Prettier 负责代码格式
     - 为主项目配置 husky、lint-staged 和 commit message 规范打基础
+- Day 27：权限骨架、菜单过滤与按钮权限 demo
+  - `src/stores/user.ts`
+    - 在用户信息中加入 `roles` 和 `permissions`
+    - 通过 getter 统一暴露当前角色和权限点
+    - 将 mock 用户信息同步到 `localStorage`，验证刷新后恢复权限状态
+  - `src/views/login/index.vue`
+    - 提供管理员、编辑员、访客三个 mock 登录入口
+    - 登录后自动跳转到来源页或 `/dashboard`
+    - 页面显示当前 token 和当前用户，方便观察登录状态变化
+  - `src/layouts/BaseLayout.vue`
+    - 使用菜单配置生成侧边栏
+    - 根据当前用户角色和权限过滤可见菜单
+    - 支持退出登录并清理当前用户状态
+  - `src/router/index.ts`
+    - 通过 `meta.roles` 和 `meta.permission` 控制页面访问权限
+    - 未登录跳 `/login`，无权限跳 `/403`
+  - `src/day20-directives/permission.ts`
+    - 将按钮权限指令改为读取 `userStore.permissions`
+    - 用户管理页通过 `v-permission` 验证新增、编辑、删除按钮显示差异
 
 ## Day 5 验证重点
 
@@ -487,6 +506,15 @@
 - 能说出 `type(scope): subject` 形式的 commit message 规范
 - 能理解 `chore(lint): add pre commit quality checks` 的含义
 
+## Day 27 验证重点
+
+- 能说明权限系统中角色、权限点、菜单、路由、按钮之间的关系
+- 能通过不同 mock 用户验证菜单过滤结果
+- 能说明菜单隐藏不等于路由安全，路由守卫仍然需要判断 `meta.permission`
+- 能通过 `v-permission` 控制用户管理页中的新增、编辑、删除按钮
+- 能说明前端权限只能控制展示和交互体验，不能替代后端接口鉴权
+- 能解释刷新页面后为什么要从持久化状态恢复用户和权限
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -605,7 +633,32 @@ http://127.0.0.1:5173/
 
 ```text
 访问 /dashboard，未登录时跳 /login。
-点击“模拟登录”后跳回 /dashboard。
-访问 /user，因为缺少 user:list 权限，跳 /403。
+点击“管理员登录”后跳回 /dashboard。
+访问 /user，管理员可以进入用户管理页。
+点击“访客登录”后手动访问 /user，会跳 /403。
+访问不存在路径，例如 /not-exist，显示 404。
+```
+
+Day 27 权限 demo 已接入项目入口，可以直接启动查看：
+
+```bash
+pnpm dev
+```
+
+启动后访问：
+
+```text
+http://127.0.0.1:5173/
+```
+
+验证路径：
+
+```text
+访问 /dashboard，未登录时跳 /login。
+点击“管理员登录”，跳转 /dashboard，可看到首页、用户管理、系统设置。
+点击“编辑员登录”，跳转 /dashboard，可看到首页、用户管理。
+点击“访客登录”，跳转 /dashboard，只能看到首页。
+编辑员进入 /user，只能看到新增、编辑按钮，看不到删除按钮。
+访客手动访问 /user，会跳转 /403。
 访问不存在路径，例如 /not-exist，显示 404。
 ```

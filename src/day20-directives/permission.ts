@@ -6,19 +6,21 @@
  */
 
 import type { Directive } from "vue";
+import { useUserStore } from "@/stores/user";
 
-const currentPermissions = [
-  "user:add",
-  "user:edit",
-  // "user:delete",
-  "role:view",
-];
+// const currentPermissions = [
+//   "user:add",
+//   "user:edit",
+//   // "user:delete",
+//   "role:view",
+// ];
 
 export const vPermission: Directive<HTMLElement, string> = {
   mounted(el, binding) {
     const permission = binding.value;
+    const userStore = useUserStore();
 
-    if (!currentPermissions.includes(permission)) {
+    if (!userStore.permissions.includes(permission)) {
       el.parentElement?.removeChild(el);
     }
   },
