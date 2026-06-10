@@ -26,3 +26,11 @@ export interface Menu {
   path: string;
   permissionCode: PermissionCode;
 }
+
+export interface RouteConfig {
+  path: string;
+  title: string;
+  permissionCode?: PermissionCode;
+  hidden?: boolean;
+  children?: RouteConfig[];
+}

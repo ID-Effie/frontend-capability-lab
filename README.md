@@ -302,20 +302,30 @@
     - 用户管理页通过 `v-permission` 验证新增、编辑、删除按钮显示差异
 - Day 29：RBAC 权限模型 demo
   - `src/day29-rbac-demo/types.ts`
-    - 定义 `RoleCode`、`PermissionCode`、`User`、`Role`、`Menu`
+    - 定义 `RoleCode`、`PermissionCode`、`User`、`Role`、`Menu`、`RouteConfig`
     - 使用联合类型约束角色码和权限码，避免权限字符串随意散落
   - `src/day29-rbac-demo/mock.ts`
     - 建立 `admin`、`manager`、`operator` 三类用户 mock 数据
     - 建立角色到权限码的 mock 映射
     - 建立带 `permissionCode` 的菜单 mock 数据
+    - 建立带 `permissionCode`、`children`、`hidden` 的路由配置 mock 数据
   - `src/day29-rbac-demo/rbac.ts`
     - `getUserRoles()` 根据用户角色 id 找到角色列表
     - `getUserPermissions()` 根据角色合并权限列表
     - `filterMenuByPermissions()` 根据权限过滤菜单
+    - `filterRoutesByPermissions()` 根据权限递归过滤路由配置
+    - `generateMenuTree()` 根据过滤后的路由生成菜单数据
+  - `src/day29-rbac-demo/tree.ts`
+    - 实现 `flatListToTree()`，练习将后端扁平菜单列表转成树结构
   - `src/day29-rbac-demo/index.ts`
-    - 遍历三类用户，在控制台打印当前用户、权限列表和可见菜单
+    - 遍历三类用户，在控制台打印当前用户、权限列表、可访问路由和可见菜单
   - `src/main.ts`
     - 临时导入 `@/day29-rbac-demo`，用于启动项目后在浏览器控制台查看 RBAC 计算结果
+- Day 30：动态路由与菜单生成 demo
+  - 在 Day 29 RBAC demo 基础上补齐路由配置过滤、菜单树生成和扁平列表转树练习
+  - 明确 demo 数据流：`用户 -> 角色 -> 权限 -> 可访问路由 -> 可见菜单`
+  - 练习 TypeScript 类型谓词、可选 `children` 字段、非空断言和递归过滤函数
+  - 已沉淀 Day 30 学习笔记：`/Users/szy/Desktop/Plan/notes/day30-dynamic-route-menu-permission-notes.md`
 
 ## Day 5 验证重点
 
@@ -531,6 +541,17 @@
 - 能说明前端权限只能控制展示和交互体验，不能替代后端接口鉴权
 - 能解释刷新页面后为什么要从持久化状态恢复用户和权限
 
+## Day 30 验证重点
+
+- 能说明为什么菜单过滤不能替代路由权限判断
+- 能根据用户权限递归过滤 `RouteConfig[]`
+- 能根据过滤后的路由生成可见菜单
+- 能解释 `children?: RouteConfig[]` 和 `children: undefined` 的类型差异
+- 能说明类型谓词 `.filter((route): route is RouteConfig => route !== null)` 的作用
+- 能解释 `route.permissionCode!` 是 TypeScript 非空断言，不是运行时校验
+- 能写出 `flatListToTree()`，把后端扁平菜单列表转换成树结构
+- 能通过控制台输出验证 `admin`、`manager`、`operator` 的权限、路由和菜单不同
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -700,3 +721,26 @@ import "@/day29-rbac-demo";
 ```
 
 也就是根据用户角色计算权限列表，再根据权限列表过滤菜单。
+
+Day 30 动态路由与菜单生成 demo 继续复用 `src/day29-rbac-demo`：
+
+```bash
+pnpm dev
+```
+
+启动项目后打开浏览器控制台，可以看到三类用户的完整权限计算结果：
+
+```text
+当前用户
+权限列表
+可访问路由
+可见菜单
+```
+
+这个 demo 的验证重点是：
+
+```text
+用户 -> 角色 -> 权限 -> 可访问路由 -> 可见菜单
+```
+
+另外可以单独查看 `src/day29-rbac-demo/tree.ts`，理解后端扁平菜单列表如何转换成侧边栏需要的树结构。

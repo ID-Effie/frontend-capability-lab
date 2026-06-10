@@ -1,4 +1,4 @@
-import { Menu, User, Role } from "./types";
+import { Menu, User, Role, RouteConfig } from "./types";
 
 export const mockUsers: User[] = [
   {
@@ -60,6 +60,42 @@ export const mockMenus: Menu[] = [
   {
     title: "系统设置",
     path: "/setting",
+    permissionCode: "setting:view",
+  },
+];
+
+export const mockRoutes: RouteConfig[] = [
+  {
+    path: "/dashboard",
+    title: "首页",
+    permissionCode: "dashboard:view",
+  },
+  {
+    path: "/user",
+    title: "用户管理",
+    permissionCode: "user:list",
+    children: [
+      {
+        path: "/user/add",
+        title: "新增用户",
+        permissionCode: "user:add",
+      },
+      {
+        path: "/user/edit",
+        title: "编辑用户",
+        permissionCode: "user:edit",
+      },
+      {
+        path: "/user/delete",
+        title: "删除用户",
+        permissionCode: "user:delete",
+        hidden: true,
+      },
+    ],
+  },
+  {
+    path: "/setting",
+    title: "系统设置",
     permissionCode: "setting:view",
   },
 ];
