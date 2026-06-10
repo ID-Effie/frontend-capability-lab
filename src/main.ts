@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import { createPinia } from "pinia";
+import "@/day29-rbac-demo";
 import { setDirectives } from "./day20-directives/index.ts";
 import "../day25-request-wrapper-demo/src/main";
 

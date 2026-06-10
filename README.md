@@ -300,6 +300,22 @@
   - `src/day20-directives/permission.ts`
     - 将按钮权限指令改为读取 `userStore.permissions`
     - 用户管理页通过 `v-permission` 验证新增、编辑、删除按钮显示差异
+- Day 29：RBAC 权限模型 demo
+  - `src/day29-rbac-demo/types.ts`
+    - 定义 `RoleCode`、`PermissionCode`、`User`、`Role`、`Menu`
+    - 使用联合类型约束角色码和权限码，避免权限字符串随意散落
+  - `src/day29-rbac-demo/mock.ts`
+    - 建立 `admin`、`manager`、`operator` 三类用户 mock 数据
+    - 建立角色到权限码的 mock 映射
+    - 建立带 `permissionCode` 的菜单 mock 数据
+  - `src/day29-rbac-demo/rbac.ts`
+    - `getUserRoles()` 根据用户角色 id 找到角色列表
+    - `getUserPermissions()` 根据角色合并权限列表
+    - `filterMenuByPermissions()` 根据权限过滤菜单
+  - `src/day29-rbac-demo/index.ts`
+    - 遍历三类用户，在控制台打印当前用户、权限列表和可见菜单
+  - `src/main.ts`
+    - 临时导入 `@/day29-rbac-demo`，用于启动项目后在浏览器控制台查看 RBAC 计算结果
 
 ## Day 5 验证重点
 
@@ -662,3 +678,25 @@ http://127.0.0.1:5173/
 访客手动访问 /user，会跳转 /403。
 访问不存在路径，例如 /not-exist，显示 404。
 ```
+
+Day 29 RBAC 权限模型 demo 已通过 `src/main.ts` 临时导入：
+
+```ts
+import "@/day29-rbac-demo";
+```
+
+启动项目后打开浏览器控制台，可以看到三类用户的权限计算结果：
+
+```text
+管理员：拥有首页、用户管理、系统设置
+主管：拥有首页、用户管理
+操作员：拥有首页、用户管理
+```
+
+这个 demo 的验证重点是：
+
+```text
+用户 -> 角色 -> 权限 -> 菜单
+```
+
+也就是根据用户角色计算权限列表，再根据权限列表过滤菜单。
