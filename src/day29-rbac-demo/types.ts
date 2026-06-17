@@ -3,8 +3,8 @@ export type RoleCode = "admin" | "manager" | "operator";
 export type PermissionCode =
   | "dashboard:view"
   | "user:list"
-  | "user:add"
-  | "user:edit"
+  | "user:create"
+  | "user:update"
   | "user:delete"
   | "setting:view";
 

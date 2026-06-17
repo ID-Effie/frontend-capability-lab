@@ -47,8 +47,8 @@ function loginAsAdmin() {
     permissions: [
       "dashboard:view",
       "user:list",
-      "user:add",
-      "user:edit",
+      "user:create",
+      "user:update",
       "user:delete",
       "setting:view",
     ],
@@ -65,7 +65,7 @@ function loginAsEditor() {
     username: "editor",
     nickname: "编辑员",
     roles: ["editor"],
-    permissions: ["dashboard:view", "user:list", "user:add", "user:edit"],
+    permissions: ["dashboard:view", "user:list", "user:create", "user:update"],
   });
 
   router.push(getRedirectPath());

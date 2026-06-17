@@ -14,8 +14,8 @@ const orderNo = "ORDER-20260530-001";
     <input v-focus placeholder="自动聚焦输入框" />
 
     <div>
-      <button v-permission="'user:add'">新增用户</button>
-      <button v-permission="'user:edit'">编辑用户</button>
+      <button v-permission="'user:create'">新增用户</button>
+      <button v-permission="'user:update'">编辑用户</button>
       <button v-permission="'user:delete'">删除用户</button>
     </div>
 

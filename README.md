@@ -326,6 +326,13 @@
   - 明确 demo 数据流：`用户 -> 角色 -> 权限 -> 可访问路由 -> 可见菜单`
   - 练习 TypeScript 类型谓词、可选 `children` 字段、非空断言和递归过滤函数
   - 已沉淀 Day 30 学习笔记：`/Users/szy/Desktop/Plan/notes/day30-dynamic-route-menu-permission-notes.md`
+- Day 31：按钮权限与权限组件 demo
+  - 复用已有 `v-permission`，验证按钮级权限根据当前用户权限显示或隐藏
+  - 明确按钮权限的两种实现方式：指令方案和组件方案
+  - 建议新增 `PermissionButton` 组件，练习用组件封装权限判断、按钮类型默认值和插槽内容
+  - 权限点继续使用 `资源:动作` 命名方式，例如 `user:create`、`user:update`、`user:delete`、`user:assign-role`
+  - 明确前端按钮隐藏只负责体验控制，不能替代后端接口鉴权
+  - 已沉淀 Day 31 学习笔记：`/Users/szy/Desktop/Plan/notes/day31-button-permission-component-notes.md`
 
 ## Day 5 验证重点
 
@@ -552,6 +559,16 @@
 - 能写出 `flatListToTree()`，把后端扁平菜单列表转换成树结构
 - 能通过控制台输出验证 `admin`、`manager`、`operator` 的权限、路由和菜单不同
 
+## Day 31 验证重点
+
+- 能说明按钮权限控制的是页面内具体操作，不是菜单入口或路由访问
+- 能写出 `v-permission="'user:create'"` 这种指令权限写法
+- 能写出 `PermissionButton` 组件权限写法，并通过 `permission` prop 判断按钮是否显示
+- 能解释 `withDefaults(..., { type: 'button' })` 是给可选 props 设置默认值
+- 能说明普通按钮隐藏适合用指令，复杂按钮、置灰提示或可复用按钮适合用组件
+- 能说明 `user:assign-role` 这类敏感操作应该有独立权限点
+- 能说清楚前端隐藏按钮不等于安全，后端接口仍然必须校验权限
+
 ## 使用方式
 
 每个 demo 文件可以直接用 Node.js 运行，例如：
@@ -744,3 +761,24 @@ pnpm dev
 ```
 
 另外可以单独查看 `src/day29-rbac-demo/tree.ts`，理解后端扁平菜单列表如何转换成侧边栏需要的树结构。
+
+Day 31 按钮权限与权限组件 demo 可以基于用户管理页继续练习：
+
+```text
+src/views/user/index.vue
+src/day20-directives/permission.ts
+```
+
+练习顺序：
+
+```text
+先用 v-permission 验证新增、编辑、删除按钮显示差异
+再新增 PermissionButton 组件，练习用组件封装权限判断
+最后用不同 mock 用户验证按钮权限差异
+```
+
+这个 demo 的验证重点是：
+
+```text
+按钮权限 -> v-permission 指令 -> PermissionButton 组件 -> 前端展示控制不等于后端安全
+```

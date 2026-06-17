@@ -28,8 +28,8 @@ export const mockRoles: Role[] = [
     permissionCodes: [
       "dashboard:view",
       "user:list",
-      "user:add",
-      "user:edit",
+      "user:create",
+      "user:update",
       "user:delete",
       "setting:view",
     ],
@@ -37,7 +37,12 @@ export const mockRoles: Role[] = [
   {
     id: "manager",
     name: "主管",
-    permissionCodes: ["dashboard:view", "user:list", "user:add", "user:edit"],
+    permissionCodes: [
+      "dashboard:view",
+      "user:list",
+      "user:create",
+      "user:update",
+    ],
   },
   {
     id: "operator",
@@ -78,12 +83,12 @@ export const mockRoutes: RouteConfig[] = [
       {
         path: "/user/add",
         title: "新增用户",
-        permissionCode: "user:add",
+        permissionCode: "user:create",
       },
       {
         path: "/user/edit",
         title: "编辑用户",
-        permissionCode: "user:edit",
+        permissionCode: "user:update",
       },
       {
         path: "/user/delete",

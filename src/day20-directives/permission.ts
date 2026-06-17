@@ -9,8 +9,8 @@ import type { Directive } from "vue";
 import { useUserStore } from "@/stores/user";
 
 // const currentPermissions = [
-//   "user:add",
-//   "user:edit",
+//   "user:create",
+//   "user:update",
 //   // "user:delete",
 //   "role:view",
 // ];
